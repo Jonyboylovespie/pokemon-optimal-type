@@ -11,10 +11,18 @@ h1 {
     color: white;
 }
 
-h2 {
+#weaknesses {
+    list-style: none;
     text-align: center;
-    color: lime;
+    margin: 0 auto;
+    padding: 0;
 }
+
+#weaknesses li {
+    margin: 10px;
+    font-size: 20px;
+}
+
 
 input, textarea {
     padding: 10px;

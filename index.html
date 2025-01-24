@@ -9,10 +9,10 @@
 
     <h1>Pokemon Weakness Finder</h1>
     <form>
-        <input id="url" type="text" placeholder="Pokemon Name">
-        <button type="button" onclick="solveWordle(document.getElementById('url').value)">Solve</button>
+        <input id="name" type="text" placeholder="Pokemon Name">
+        <button type="button" onclick="findWeaknesses(document.getElementById('name').value)">Find Weaknesses</button>
     </form>
-    <h2 id="answer"></h2>
+    <ul id="weaknesses"></ul>
 
     <script src="script.js"></script>
 </body>
