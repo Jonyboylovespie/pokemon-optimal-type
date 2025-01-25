@@ -22,7 +22,7 @@
 async function findWeaknesses(name) {
     
     let listItems = ["WEAKNESSES:"];
-    for (let attackType of sortByFrequencyAndAlphabet(await goodAttackTypes(name)))
+    for (let attackType of await goodAttackTypes(name))
     {
         listItems.push(attackType.toUpperCase());
     }
@@ -115,7 +115,7 @@ async function goodAttackTypes(pokemonName)
             }
         }
     }
-    return goodAttackList;
+    return sortByFrequencyAndAlphabet(goodAttackList);
 }
 
 async function badAttackTypes(pokemonName) {
