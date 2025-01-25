@@ -22,7 +22,7 @@
 async function findWeaknesses(name) {
     
     let listItems = ["WEAKNESSES:"];
-    for (let attackType of await goodAttackTypes(name))
+    for (let attackType of sortByFrequencyAndAlphabet(await goodAttackTypes(name)))
     {
         listItems.push(attackType.toUpperCase());
     }
@@ -144,4 +144,25 @@ async function badAttackTypes(pokemonName)
         }
     }
     return goodAttackList;
+}
+
+function sortByFrequencyAndAlphabet(arr) {
+    const countOccurrences = (arr) => {
+        const count = {};
+        arr.forEach(item => {
+            count[item] = (count[item] || 0) + 1;
+        });
+        return count;
+    };
+
+    const counts = countOccurrences(arr);
+
+    const uniqueList = [...new Set(arr)];
+
+    return uniqueList.sort((a, b) => {
+        if (counts[b] !== counts[a]) {
+            return counts[b] - counts[a];
+        }
+        return a.localeCompare(b);
+    });
 }
