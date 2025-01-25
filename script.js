@@ -118,32 +118,30 @@ async function goodAttackTypes(pokemonName)
     return goodAttackList;
 }
 
-async function badAttackTypes(pokemonName)
-{
+async function badAttackTypes(pokemonName) {
     let pokemonTypes = await getPokemonTypes(pokemonName);
-    let goodAttackList = [];
-    for (let pokemonType of pokemonTypes) 
-    {
+    let noDamageList = [];
+    let halfDamageList = [];
+
+    for (let pokemonType of pokemonTypes) {
         let endpoint = "type/" + pokemonType;
         let type = await fetchFromPokeAPI(endpoint);
-        if (type && type.damage_relations && type.damage_relations.no_damage_from)
-        {
+
+        if (type && type.damage_relations && type.damage_relations.no_damage_from) {
             let attackTypes = type.damage_relations.no_damage_from.map(double_damage_from_info => double_damage_from_info.name);
-            for (let attackType of attackTypes)
-            {
-                goodAttackList.push(attackType);
-            }
+            noDamageList.push(...attackTypes);
         }
-        if (type && type.damage_relations && type.damage_relations.half_damage_from)
-        {
+
+        if (type && type.damage_relations && type.damage_relations.half_damage_from) {
             let attackTypes = type.damage_relations.half_damage_from.map(double_damage_from_info => double_damage_from_info.name);
-            for (let attackType of attackTypes)
-            {
-                goodAttackList.push(attackType);
-            }
+            halfDamageList.push(...attackTypes);
         }
     }
-    return goodAttackList;
+
+    noDamageList = sortByFrequencyAndAlphabet(noDamageList);
+    halfDamageList = sortByFrequencyAndAlphabet(halfDamageList);
+
+    return [...noDamageList, ...halfDamageList];
 }
 
 function sortByFrequencyAndAlphabet(arr) {
